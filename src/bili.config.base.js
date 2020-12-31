@@ -1,4 +1,4 @@
-export const defaultBiliConfig = {
+module.exports.defaultBiliConfig = {
   plugins: {
     terser: {
       mangle: {

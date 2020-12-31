@@ -1,7 +1,8 @@
 {
   "extends": "./src/tsconfig.base.json",
   "compilerOptions": {
+    "allowJs": true,
     "downlevelIteration": true
   },
-  "files": ["./src/bili.config.base.ts", "./src/index.ts"]
+  "files": ["src/bili.config.base.js", "./src/index.ts"]
 }
