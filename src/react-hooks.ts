@@ -80,8 +80,6 @@ export const useIntersection = <
   const [intersected, setIntersected] = useState(false)
 
   useEffect(() => {
-    if (ref.current == null) return
-
     const ob = new IntersectionObserver(
       ([entry]) => {
         setIntersected(entry.isIntersecting)
@@ -92,7 +90,9 @@ export const useIntersection = <
       },
     )
 
-    ob.observe(ref.current)
+    if (!ref.current) return
+    ob.observe(ref.current!)
+    return () => ob.disconnect()
   }, [ref.current, rootRef.current])
 
   return [intersected, ref, rootRef] as [

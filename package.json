@@ -1,5 +1,5 @@
 {
-  "name": "arma",
+  "name": "@hanakla/arma",
   "version": "0.1.0",
   "description": "Single killer functions of Web frontend",
   "main": "index.js",
@@ -11,10 +11,10 @@
   "scripts": {
     "build": "bili",
     "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
-    "build:copy-files": " mkdir -p dist && cp package.json dist/ && cp src/tsconfig.base.json dist/",
+    "build:copy-files": " mkdir -p dist && cp package.json ./dist/ && cp ./src/tsconfig.base.json ./dist/",
     "clean:dist": "rm -rf dist",
-    "prepublishOnly": "yarn clean:dist && yarn build:copy-files && yarn build:declarations && yarn build",
-    "pub": "yarn publish dist"
+    "build:publish": "yarn clean:dist && yarn build:copy-files && yarn build:declarations && yarn build",
+    "pub": "yarn build:publish  && yarn publish dist"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
