@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noEmitHelpers": false,
+    "importHelpers": false,
+    "module": "CommonJS",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
+  }
+}

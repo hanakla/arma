@@ -1,0 +1,7 @@
+{
+  "extends": "./src/tsconfig.base.json",
+  "compilerOptions": {
+    "downlevelIteration": true
+  },
+  "files": ["./src/bili.config.base.ts", "./src/index.ts"]
+}
