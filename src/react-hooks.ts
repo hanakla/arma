@@ -34,6 +34,7 @@ export const useChangedEffect = <W extends DependencyList>(
   watch: W,
   deps: DependencyList = [],
 ) => {
+  let disposer: void | (() => void | undefined)
   const prevWatch = useRef<W | null>(null)
 
   useEffect(() => {
@@ -46,10 +47,16 @@ export const useChangedEffect = <W extends DependencyList>(
       if (prevWatch.current[idx] !== watch[idx]) {
         const prev = prevWatch.current
         prevWatch.current = watch
-        return effect(prev)
+
+        if (disposer) disposer()
+        disposer = effect(prev)
       }
     }
   }, [...watch, ...deps])
+
+  useEffect(() => {
+    return () => disposer && disposer()
+  }, [])
 }
 
 export const useAsyncEffect = (
