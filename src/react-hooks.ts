@@ -29,12 +29,12 @@ export const useObjectState = <T extends object>(initialState: T) => {
   return [state, updater] as const
 }
 
-export const useChangedEffect = (
-  effect: () => void | (() => void | undefined),
-  watch: DependencyList,
+export const useChangedEffect = <W extends DependencyList>(
+  effect: (previous: W) => void | (() => void | undefined),
+  watch: W,
   deps: DependencyList = [],
 ) => {
-  const prevWatch = useRef<DependencyList | null>(null)
+  const prevWatch = useRef<W | null>(null)
 
   useEffect(() => {
     if (prevWatch.current == null) {
@@ -44,8 +44,9 @@ export const useChangedEffect = (
 
     for (const idx in watch) {
       if (prevWatch.current[idx] !== watch[idx]) {
+        const prev = prevWatch.current
         prevWatch.current = watch
-        return effect()
+        return effect(prev)
       }
     }
   }, [...watch, ...deps])
