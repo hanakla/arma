@@ -10,7 +10,7 @@ DOM: `selectFile` / `letDownload` / `ClipBoardUtil` / `loadImage` / `loadImageFr
 
 Files: `loadImage` / `loadImageFromBlob`
 
-React Hooks: `useAsyncEffect` / `useChangedEffec` t/ `useObjectState` / `useSetRef` / `useCombineRe` f/ `useCurrentVisibleAnchorName` / `useIntersection`
+React Hooks: `useAsyncEffect` / `useChangedEffect` / `useObjectState` / `useSetRef` / `useCombineRef` / `useCurrentVisibleAnchorName` / `useIntersection`
 
 String: `lineBreakToSpace` / `ellipsisString` / `trimString`
 
