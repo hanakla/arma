@@ -1,0 +1,7 @@
+/.vscode
+/src
+/.*
+bili.config.ts
+tsconfig.json
+yarn-error.log
+yarn.lock
