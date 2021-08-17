@@ -13,7 +13,7 @@ type Matcher<R> = {
   ): Matcher<R | ValueOrReturnType<R1>>
   _<R1 extends any | ((_: void) => any | Error) = R>(
     value?: R1,
-  ): R | ValueOrReturnType<R1>
+  ): Exclude<R | ValueOrReturnType<R1>, Error>
 }
 
 export const match = <T>(actual: T) => {
