@@ -16,4 +16,4 @@ String: `lineBreakToSpace` / `ellipsisString` / `trimString`
 
 styled-components: `styleWhen`
 
-Lang feature: `rescue`
+Lang feature: `rescue` / `match`
