@@ -12,4 +12,4 @@ export {
 } from './react-hooks'
 export { lineBreakToSpace, ellipsisString, trimString } from './strings'
 export { styleWhen } from './styled'
-export { rescue } from './jslang'
+export { rescue, match } from './jslang'
