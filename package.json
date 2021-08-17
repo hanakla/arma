@@ -1,9 +1,10 @@
 {
   "name": "@hanakla/arma",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Single killer functions of Web frontend",
   "main": "index.js",
   "module": "index.esm.js",
+  "types": "index.d.ts",
   "repository": "git@github.com:hanakla/arma.git",
   "author": "Hanakla <hanakla.dev@gmail.com>",
   "license": "MIT",
