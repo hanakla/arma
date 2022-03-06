@@ -1,10 +1,10 @@
 {
   "name": "@hanakla/arma",
-  "version": "0.1.10",
+  "version": "0.2.2",
   "description": "Single killer functions of Web frontend",
-  "main": "index.js",
-  "module": "index.esm.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:hanakla/arma.git",
   "author": "Hanakla <hanakla.dev@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "build:copy-files": " mkdir -p dist && cp package.json ./dist/ && cp README.md ./dist/ && cp ./src/tsconfig.base.json ./dist/",
     "clean:dist": "rm -rf dist",
     "build:publish": "yarn clean:dist && yarn build:copy-files && yarn build:declarations && yarn build",
-    "pub": "yarn build:publish  && yarn publish dist --access public"
+    "prepublishOnly": "yarn build:publish"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
