@@ -16,9 +16,9 @@ export const useObjectState = <T extends object>(initialState: T) => {
   const updater = useCallback(
     (patch: Partial<T> | ((draft: Draft<T>) => void)) => {
       typeof patch === 'function'
-        ? update(immer(state, patch))
-        : update(
-            immer(state, (draft) => {
+        ? update((prev) => immer(prev, patch))
+        : update((prev) =>
+            immer(prev, (draft) => {
               Object.assign(draft, patch)
             }),
           )

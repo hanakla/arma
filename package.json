@@ -1,6 +1,6 @@
 {
   "name": "@hanakla/arma",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Single killer functions of Web frontend",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
