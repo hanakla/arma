@@ -2,6 +2,7 @@ import immer, { Draft } from 'immer'
 import {
   DependencyList,
   MutableRefObject,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -174,15 +175,25 @@ export const useSetRef = <T extends Element>() => {
  * const ref = useCombinedRef(ref1, ref2)
  * ```
  */
-export const useCombineRef = <T extends Element | null>(
-  ...refs: Array<React.MutableRefObject<T>>
-): ((el: T) => void) => {
-  return useCallback(
-    (el: any) => {
-      refs.forEach((ref) => {
+export const useCombineRef = <T>(
+  ...refs: Array<React.MutableRefObject<T> | ((el: T | null) => void)>
+): RefObject<T> => {
+  const ref = useRef<T>()
+
+  return useMemo(
+    () => ({
+      get current() {
+        return ref.current
+      },
+      set current(el: any) {
         ref.current = el
-      })
-    },
+        refs.forEach((ref) => {
+          if (ref == null) return
+          if (typeof ref === 'function') ref(el)
+          else ref.current = el
+        })
+      },
+    }),
     [...refs],
   )
 }
