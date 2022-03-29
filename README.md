@@ -4,20 +4,45 @@ Floor killer single functions for Web frontend
 
 ## Functions
 
-CSS: `cssurl`
+See details from type definition and カン.
 
-DOM: `selectFile` / `letDownload` / `ClipBoardUtil` / `loadImage` / `loadImageFromBlob`
+### CSS
 
-Files: `loadImage` / `loadImageFromBlob`
+- `cssurl` - null safe css `url()` wrapper.
 
-React Hooks: `useAsyncEffect` / `useChangedEffect` / `useObjectState` / `useSetRef` / `useCombineRef` / `useCurrentVisibleAnchorName` / `useIntersection`
+### DOM
 
-String: `lineBreakToSpace` / `ellipsisString` / `trimString`
+- `selectFile` - open file selector
+- `letDownload` - Allow users to download blob as file
+- `ClipBoardUtil`
+- `loadImage` - load image by url
+- `loadImageFromBlob` - load image by blob
 
-styled-components: `styleWhen`
+### React Hooks
 
-Lang feature: `rescue` / `match`
+- `useAsyncEffect`
+- `useChangedEffect`
+- `useObjectState`
+- `useSetRef`
+- `useCombineRef` - combile multiple refs into one ref
+- `useCurrentVisibleAnchorName`
+- `useIntersection`
+- `useFunk` - Dependecy free `useCallback`
 
+### String
+
+- `lineBreakToSpace`
+- `ellipsisString`
+- `trimString`
+
+### styled-components
+
+- `styleWhen` - conditional styling helper function
+
+### Lang feature
+
+- `rescue` - exception handling function
+- `match` - simple pattern mather
 
 ## bili.config
 
@@ -40,5 +65,4 @@ export default {
     format: ['cjs', 'esm'],
   },
 } as Config
-
 ```
