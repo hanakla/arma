@@ -9,6 +9,7 @@ export {
   useCombineRef,
   useCurrentVisibleAnchorName,
   useIntersection,
+  useFunk,
 } from './react-hooks'
 export { lineBreakToSpace, ellipsisString, trimString } from './strings'
 export { styleWhen } from './styled'

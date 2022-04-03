@@ -198,9 +198,9 @@ export const useCombineRef = <T>(
   )
 }
 
-export const useFunk = <T extends (...args: any) => any>(fn: T) => {
+export const useFunk = <T extends (...args: any[]) => any>(fn: T): T => {
   const prev = useRef<T | null>(fn)
   prev.current = fn
 
-  return useMemo(() => (...args: any[]) => prev.current!(...args), [])
+  return useMemo((): any => (...args) => prev.current!(...args), [])
 }
