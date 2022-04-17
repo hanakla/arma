@@ -4,6 +4,7 @@ import {
   MutableRefObject,
   RefObject,
   useCallback,
+  useDebugValue,
   useEffect,
   useMemo,
   useRef,
@@ -27,6 +28,8 @@ export const useObjectState = <T extends object>(initialState: T) => {
     [update],
   )
 
+  useDebugValue(state)
+
   return [state, updater] as const
 }
 
@@ -38,6 +41,8 @@ export const useChangedEffect = (
   const prevWatch = useRef<DependencyList | null>(null)
 
   fnRef.current = effect
+
+  useDebugValue({ effect, watch })
 
   useEffect(() => {
     if (prevWatch.current == null) {
@@ -58,6 +63,8 @@ export const useAsyncEffect = (
   effect: () => Promise<undefined | (() => void | undefined)>,
   deps?: DependencyList,
 ) => {
+  useDebugValue(effect)
+
   useEffect(() => {
     let disposed = false
     let dispose: (() => void | undefined) | undefined | null = null
@@ -201,6 +208,8 @@ export const useCombineRef = <T>(
 export const useFunk = <T extends (...args: any[]) => any>(fn: T): T => {
   const prev = useRef<T | null>(fn)
   prev.current = fn
+
+  useDebugValue(fn)
 
   return useMemo((): any => (...args) => prev.current!(...args), [])
 }
