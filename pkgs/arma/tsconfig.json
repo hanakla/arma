@@ -1,5 +1,5 @@
 {
-  "extends": "./src/tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "downlevelIteration": true,
