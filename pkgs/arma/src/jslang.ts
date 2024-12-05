@@ -16,7 +16,7 @@ type Matcher<R> = {
   ): Exclude<R | ValueOrReturnType<R1>, Error>
 }
 
-export const match = <T>(actual: T) => {
+export function match<T>(actual: T) {
   let matched = false
   let result: any | null = null
 

@@ -1,9 +1,10 @@
 {
-  "extends": "./src/tsconfig.base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "allowJs": true,
     "downlevelIteration": true,
-    "target": "ES2015"
+    "target": "ES2015",
+    "skipLibCheck": true
   },
   "files": ["src/bili.config.base.js", "./src/index.ts"]
 }
