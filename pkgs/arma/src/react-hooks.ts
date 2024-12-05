@@ -6,13 +6,14 @@ import {
   useCallback,
   useDebugValue,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from 'react'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const useObjectState = <T extends object>(initialState: T) => {
+export function useObjectState<T extends object>(initialState: T) {
   const [state, update] = useState<T>(initialState)
 
   const updater = useCallback(
@@ -33,16 +34,14 @@ export const useObjectState = <T extends object>(initialState: T) => {
   return [state, updater] as const
 }
 
-export const useChangedEffect = (
+export function useChangedEffect(
   effect: () => void | (() => void | undefined),
   watch: DependencyList,
-) => {
+) {
   const fnRef = useRef(effect)
   const prevWatch = useRef<DependencyList | null>(null)
 
   fnRef.current = effect
-
-  useDebugValue({ effect, watch })
 
   useEffect(() => {
     if (prevWatch.current == null) {
@@ -59,32 +58,35 @@ export const useChangedEffect = (
   }, [...watch])
 }
 
-export const useAsyncEffect = (
-  effect: () => Promise<undefined | (() => void | undefined)>,
+export function useAsyncEffect(
+  effect: (
+    signal: AbortSignal,
+  ) => Promise<undefined | (() => void | undefined)>,
   deps?: DependencyList,
-) => {
-  useDebugValue(effect)
-
+) {
   useEffect(() => {
     let disposed = false
     let dispose: (() => void | undefined) | undefined | null = null
+    const abort = new AbortController()
 
-    effect().then((destroy) => {
+    effect(abort.signal).then((destroy) => {
       dispose = destroy
+      abort.abort()
       if (disposed) dispose?.()
     })
 
     return () => {
       disposed = true
+      abort.abort()
       dispose?.()
     }
   }, deps)
 }
 
-export const useIntersection = <
+export function useIntersection<
   E extends HTMLElement | null = HTMLElement,
-  RootElement extends HTMLElement | null = HTMLElement
->() => {
+  RootElement extends HTMLElement | null = HTMLElement,
+>() {
   const rootRef = useRef<RootElement | null>(null)
   const ref = useRef<E | null>(null)
   const [intersected, setIntersected] = useState(false)
@@ -113,7 +115,7 @@ export const useIntersection = <
 }
 
 /** 今画面のいい感じのところにあるアンカー名を返すhooks */
-export const useCurrentVisibleAnchorName = () => {
+export function useCurrentVisibleAnchorName() {
   const [currentAnchor, setAnchor] = useState<string | null>(null)
 
   useEffect(() => {
@@ -152,7 +154,7 @@ export const useCurrentVisibleAnchorName = () => {
  * )
  * ```
  */
-export const useSetRef = <T extends Element>() => {
+export function useSetRef<T extends Element>() {
   const [refs, setRefs] = useState(new Set<T>())
   const keeped = useMemo(() => new WeakSet<T>(), [])
 
@@ -182,9 +184,9 @@ export const useSetRef = <T extends Element>() => {
  * const ref = useCombinedRef(ref1, ref2)
  * ```
  */
-export const useCombineRef = <T>(
+export function useCombineRef<T>(
   ...refs: Array<React.MutableRefObject<T> | ((el: T | null) => void)>
-): RefObject<T> => {
+): RefObject<T> {
   const ref = useRef<T>()
 
   return useMemo(
@@ -205,11 +207,46 @@ export const useCombineRef = <T>(
   )
 }
 
-export const useFunk = <T extends (...args: any[]) => any>(fn: T): T => {
+export function useStableCallback<T extends (...args: any[]) => any>(fn: T) {
+  const latestRef = useRef<T | null>(null)
+  const stableRef = useRef<T | null>(null)
+
+  if (stableRef.current == null) {
+    stableRef.current = function () {
+      latestRef.current!.apply(this, arguments as any)
+    } as T
+  }
+
+  useLayoutEffect(() => {
+    latestRef.current = fn
+  }, [fn])
+
+  return stableRef.current
+}
+
+export function useStablePreviousRef<T>(value: T) {
+  const latestRef = useRef<T>(value)
+
+  useLayoutEffect(() => {
+    latestRef.current = value
+  }, [value])
+
+  return latestRef.current
+}
+
+/**
+ * @deprecated use `useStableCallback` instead
+ */
+export function useFunk<T extends (...args: any[]) => any>(fn: T): T {
   const prev = useRef<T | null>(fn)
   prev.current = fn
 
   useDebugValue(fn)
 
-  return useMemo((): any => (...args) => prev.current!(...args), [])
+  return useMemo(
+    (): any =>
+      (...args) =>
+        prev.current!(...args),
+    [],
+  )
 }

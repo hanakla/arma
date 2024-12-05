@@ -1,5 +1,10 @@
 export { cssurl } from './css'
-export { selectFile, letDownload, ClipBoardUtil } from './dom'
+export {
+  selectFile,
+  letDownload,
+  ClipBoardUtil,
+  clipbordWriteText,
+} from './dom'
 export { loadImage, loadImageFromBlob } from './files'
 export {
   useAsyncEffect,
@@ -10,6 +15,8 @@ export {
   useCurrentVisibleAnchorName,
   useIntersection,
   useFunk,
+  useStableCallback,
+  useStablePreviousRef,
 } from './react-hooks'
 export { lineBreakToSpace, ellipsisString, trimString } from './strings'
 export { styleWhen } from './styled'

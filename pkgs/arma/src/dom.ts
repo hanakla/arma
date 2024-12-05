@@ -1,4 +1,4 @@
-export const selectFile = async ({
+export async function selectFile({
   extensions,
   directory,
   multiple,
@@ -7,7 +7,7 @@ export const selectFile = async ({
   extensions?: string[]
   directory?: boolean
   multiple?: boolean
-} = {}): Promise<File[]> => {
+} = {}): Promise<File[]> {
   const input = document.createElement('input')
   input.type = 'file'
   input.accept = (extensions || []).join(',')
@@ -45,7 +45,7 @@ export const selectFile = async ({
   })
 }
 
-export const letDownload = (url: string, filename?: string) => {
+export function letDownload(url: string, filename?: string) {
   const a = Object.assign(document.createElement('a'), {
     href: url,
     download: filename ?? '',
@@ -54,31 +54,36 @@ export const letDownload = (url: string, filename?: string) => {
   a.click()
 }
 
+export function clipbordWriteText(text: string) {
+  const input = document.createElement('textarea')
+  input.value = text
+  input.readOnly = true
+
+  Object.assign(input.style, {
+    border: '0',
+    padding: '0',
+    margin: '0',
+
+    position: 'absolute',
+    left: '-9999px',
+    top: `${window.pageYOffset || document.documentElement.scrollTop}px`,
+
+    // Prevent zooming on iOS
+    fontSize: '12px',
+  })
+
+  document.body.appendChild(input)
+  input.focus({ preventScroll: true })
+  input.setSelectionRange(0, Array.from(text).length)
+
+  const result = document.execCommand('copy')
+  document.body.removeChild(input)
+  return result
+}
+
+/** @deprecated */
 export const ClipBoardUtil = {
   writeText(text: string) {
-    const input = document.createElement('textarea')
-    input.value = text
-    input.readOnly = true
-
-    Object.assign(input.style, {
-      border: '0',
-      padding: '0',
-      margin: '0',
-
-      position: 'absolute',
-      left: '-9999px',
-      top: `${window.pageYOffset || document.documentElement.scrollTop}px`,
-
-      // Prevent zooming on iOS
-      fontSize: '12px',
-    })
-
-    document.body.appendChild(input)
-    input.focus({ preventScroll: true })
-    input.setSelectionRange(0, Array.from(text).length)
-
-    const result = document.execCommand('copy')
-    document.body.removeChild(input)
-    return result
+    clipbordWriteText(text)
   },
 }
