@@ -2,6 +2,7 @@ import immer, { Draft } from 'immer'
 import {
   DependencyList,
   MutableRefObject,
+  RefCallback,
   RefObject,
   useCallback,
   useDebugValue,
@@ -185,26 +186,43 @@ export function useSetRef<T extends Element>() {
  * ```
  */
 export function useCombineRef<T>(
-  ...refs: Array<React.MutableRefObject<T> | ((el: T | null) => void)>
-): RefObject<T> {
+  ...refs: Array<
+    | React.MutableRefObject<T>
+    | React.ForwardedRef<T>
+    | ((el: T | null) => void | (() => void))
+  >
+): MutableRefObject<T> & RefCallback<T> {
   const ref = useRef<T>()
+  const prevCleanups = useRef<(() => void)[]>([])
 
-  return useMemo(
-    () => ({
-      get current() {
+  return useMemo(() => {
+    const callback: RefCallback<T> = (el: any) => {
+      ref.current = el
+
+      const cleanups: (() => void)[] = []
+      for (const ref of refs) {
+        if (typeof ref === 'function') {
+          const ret = ref(el)
+          if (ret) cleanups.push(ret)
+        } else if (ref != null) {
+          ref.current = el
+        }
+      }
+
+      return () => {
+        prevCleanups.current.forEach((cleanup) => cleanup())
+      }
+    }
+
+    return Object.defineProperty(callback, 'current', {
+      get() {
         return ref.current
       },
-      set current(el: any) {
-        ref.current = el
-        refs.forEach((ref) => {
-          if (ref == null) return
-          if (typeof ref === 'function') ref(el)
-          else ref.current = el
-        })
+      set(el: T) {
+        callback(el)
       },
-    }),
-    [...refs],
-  )
+    }) as unknown as MutableRefObject<T> & RefCallback<T>
+  }, refs)
 }
 
 export function useStableCallback<T extends (...args: any[]) => any>(fn: T) {
@@ -232,21 +250,4 @@ export function useStablePreviousRef<T>(value: T) {
   }, [value])
 
   return latestRef.current
-}
-
-/**
- * @deprecated use `useStableCallback` instead
- */
-export function useFunk<T extends (...args: any[]) => any>(fn: T): T {
-  const prev = useRef<T | null>(fn)
-  prev.current = fn
-
-  useDebugValue(fn)
-
-  return useMemo(
-    (): any =>
-      (...args) =>
-        prev.current!(...args),
-    [],
-  )
 }
