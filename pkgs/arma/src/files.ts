@@ -1,6 +1,18 @@
-export async function loadImageFromBlob(blob: Blob) {
+export async function loadImageFromBlob(blob: Blob): Promise<{
+  image: HTMLImageElement
+  url: string
+  [Symbol.dispose]?: () => void
+}> {
   const url = URL.createObjectURL(blob)
-  return { image: await loadImage(url), url }
+
+  const obj = { image: await loadImage(url), url }
+  if (Symbol.dispose != null) {
+    obj[Symbol.dispose] = () => {
+      URL.revokeObjectURL(url)
+    }
+  }
+
+  return obj
 }
 export async function loadImage(url: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
