@@ -1,8 +1,8 @@
+import { clipbordWriteText, useStableCallback } from '@hanakla/arma'
+import Head from 'next/head'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 // import { xonokai } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { getLibContents } from '../../test'
-import { useStableCallback, clipbordWriteText } from '@hanakla/arma'
-import Head from 'next/head'
 
 type Props = {
   contents: Awaited<ReturnType<typeof getLibContents>>
@@ -155,12 +155,12 @@ function CodeBlock({ children }: { children: string }) {
           padding: 4,
         }}
       >
-        <button type="button" onClick={handleCopy}>
+        <button type='button' onClick={handleCopy}>
           Copy
         </button>
       </div>
       <SyntaxHighlighter
-        language="typescript"
+        language='typescript'
         wrapLines
         wrapLongLines
         // style={xonokai}

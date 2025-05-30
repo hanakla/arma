@@ -6,10 +6,10 @@ type SuccessResult<T> = readonly [result: T, error: null] & {
   error: null
 }
 
-type FailureResult<T> = readonly [result: null, error: Error] & {
+type FailureResult<T> = readonly [result: null, error: T] & {
   success: false
   result: null
-  error: Error
+  error: T
 }
 type Result<T> = SuccessResult<T> | FailureResult<T>
 

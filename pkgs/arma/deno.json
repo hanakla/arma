@@ -1,7 +1,7 @@
 {
   "name": "@hanakla/arma",
   "license": "MIT",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "exports": "./src/index.ts",
   "unstable": ["sloppy-imports"],
   "nodeModulesDir": "auto",
