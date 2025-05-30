@@ -1,7 +1,7 @@
 export async function loadImageFromBlob(blob: Blob): Promise<{
   image: HTMLImageElement
   url: string
-  [Symbol.dispose]?: () => void
+  [Symbol.dispose]: () => void
 }> {
   const url = URL.createObjectURL(blob)
 
@@ -12,7 +12,7 @@ export async function loadImageFromBlob(blob: Blob): Promise<{
     }
   }
 
-  return obj
+  return obj as any
 }
 export async function loadImage(url: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
