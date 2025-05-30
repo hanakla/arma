@@ -1,11 +1,11 @@
-export { cssurl } from './css'
+export { cssurl } from './css.ts'
 export {
   selectFile,
   letDownload,
   ClipBoardUtil,
   clipbordWriteText,
-} from './dom'
-export { loadImage, loadImageFromBlob } from './files'
+} from './dom.ts'
+export { loadImage, loadImageFromBlob } from './files.ts'
 export {
   useAsyncEffect,
   useChangedEffect,
@@ -16,7 +16,7 @@ export {
   useIntersection,
   useStableCallback,
   useStablePreviousRef,
-} from './react-hooks'
-export { lineBreakToSpace, ellipsisString, trimString } from './strings'
-export { styleWhen } from './styled'
-export { rescue, match } from './jslang'
+} from './react-hooks.ts'
+export { lineBreakToSpace, ellipsisString, trimString } from './strings.ts'
+export { styleWhen } from './styled.ts'
+export { rescue, match } from './jslang.ts'
