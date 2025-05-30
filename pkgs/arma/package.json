@@ -1,6 +1,6 @@
 {
   "name": "@hanakla/arma",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Single killer functions of Web frontend",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "build:publish": "yarn clean:dist && yarn build:copy-files && yarn build",
+    "build:publish": "yarn clean:dist && yarn build",
     "clean:dist": "rm -rf dist",
     "prepublishOnly": "yarn build:publish"
   },
