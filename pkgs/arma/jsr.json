@@ -1,0 +1,10 @@
+{
+  "$schema": "https://jsr.io/schema/config-file.v1.json",
+  "name": "@hanakla/arma",
+  "license": "MIT",
+  "version": "0.5.0",
+  "exports": "./src/index.ts",
+  "publish": {
+    "include": ["src/"]
+  }
+}
