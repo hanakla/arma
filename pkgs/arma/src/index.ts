@@ -14,7 +14,6 @@ export {
   useCombineRef,
   useCurrentVisibleAnchorName,
   useIntersection,
-  useFunk,
   useStableCallback,
   useStablePreviousRef,
 } from './react-hooks'

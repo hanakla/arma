@@ -22,20 +22,3 @@ export async function loadImage(url: string) {
     img.src = url
   })
 }
-
-export function readFileAsBuffer(file: File): Promise<ArrayBuffer> {
-  if (typeof file.arrayBuffer === 'function') return file.arrayBuffer()
-
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-
-    reader.onload = () => {
-      resolve(reader.result as ArrayBuffer)
-    }
-    reader.onerror = (error) => {
-      reject(error)
-    }
-
-    reader.readAsArrayBuffer(file)
-  })
-}
