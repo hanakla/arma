@@ -1,4 +1,4 @@
-import immer, { Draft } from 'immer'
+import { produce as immer, Draft } from 'immer'
 import React from 'react'
 import {
   DependencyList,

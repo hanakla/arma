@@ -9,19 +9,31 @@
   "author": "Hanakla <hanakla.dev@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./react-hooks": {
+      "types": "./dist/react-hooks.d.ts",
+      "import": "./dist/react-hooks.mjs",
+      "require": "./dist/react-hooks.js"
+    }
+  },
   "scripts": {
-    "build": "bili",
-    "build:declarations": "tsc --emitDeclarationOnly --declaration --outDir ./dist",
+    "build": "tsup",
     "build:copy-files": " mkdir -p dist && cp package.json ./dist/ && cp ../../README.md ./dist/",
+    "build:publish": "yarn clean:dist && yarn build:copy-files && yarn build",
     "clean:dist": "rm -rf dist",
-    "build:publish": "yarn clean:dist && yarn build:copy-files && yarn build:declarations && yarn build",
     "prepublishOnly": "yarn build:publish"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "bili": "^5.0.5",
-    "rollup-plugin-typescript2": "^0.36.0",
-    "typescript": "^5.8.3"
+    "immer": "^10.1.1",
+    "react": "^19.1.0",
+    "typescript": "^5.8.3",
+    "tsup": "^8.5.0"
   },
   "peerDependencies": {
     "immer": "^10.1.1",
@@ -36,6 +48,9 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["biome check --write", "git add"]
+    "*.{ts,tsx}": [
+      "biome check --write",
+      "git add"
+    ]
   }
 }
