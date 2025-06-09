@@ -22,3 +22,13 @@ export async function loadImage(url: string) {
     img.src = url
   })
 }
+
+export async function createDisposableObjectURL(blob: Blob) {
+  const url = URL.createObjectURL(blob)
+
+  return Object.assign(url, {
+    [Symbol.dispose]: () => {
+      URL.revokeObjectURL(url);
+    }
+  })
+}
